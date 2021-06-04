@@ -7,27 +7,28 @@ public class TicTacToeApp {
     private static final Scanner in = new Scanner(System.in).useDelimiter("\n");
     private static Engine engine;
     public static void main(String[] args) {
-        String cell = enterCells();
         engine = new Engine();
-        Character [][] cells = engine.setup(cell,false,0,0);
-       /* engine.addTotalValue();
-        System.out.println(engine.checkStates(cell));*/
-        move(cells);
-
+        char [][] cells = engine.setup(' ',1,1);
+        int count =1;
+        do {
+            move(cells, count++);
+            engine.checkState();
+        } while (!engine.findWinner());
     }
 
-    private static String enterCells(){
-        System.out.print("Enter cells: ");
-        return in.next();
+    private static char switchXO(int count){
+        return count%2 ==0 ?'O':'X';
     }
-    private static void move(Character [][] cells){
-        String coor;
+
+    private static void move(char [][] cells,int count){
+        String coor ;
         while(true){
-            coor =  enterCoordinates();
+            coor = enterCoordinates();
             int row= Integer.parseInt(String.valueOf(coor.charAt(0)));
             int col= Integer.parseInt(String.valueOf(coor.charAt(2)));
             if(isOccupied(cells,row,col)){
-               engine.setup(null,true,row,col);
+               char move = switchXO(count);
+               engine.setup(move,row,col);
                break;
            }
             else {
@@ -36,7 +37,7 @@ public class TicTacToeApp {
         }
     }
 
-    private static boolean isOccupied(Character [][] cells,int r,int c){
+    private static boolean isOccupied(char [][] cells,int r,int c){
         return cells[r][c] != 'X'&&cells[r][c] != 'O';
     }
     private static String enterCoordinates(){
