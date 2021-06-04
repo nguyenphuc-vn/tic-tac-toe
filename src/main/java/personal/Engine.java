@@ -6,30 +6,35 @@ import java.util.logging.Logger;
 
 public class Engine {
     private static final Logger logger = Logger.getLogger(Engine.class.getName());
-    private Character[][] cells;
+    private Character[][] cells = new Character[4][4];
     private Set<Integer> set = new HashSet<>();
 
-    public void setup(String cell) {
-        cells = new Character[3][3];
+    public Character[][] setup(String cell,boolean fromCoor,int r, int c) {
         int k = 0;
         printDash();
-        for (int row = 0; row < 3; row++) {
+        for (int row = 1; row <= 3; row++) {
             System.out.print("| ");
-            for (int col = 0; col < 3; col++) {
+            for (int col = 1; col <= 3; col++) {
+                if(fromCoor){
+                    cells[r][c] = 'X';
+                }
+                else
                 cells[row][col] = cell.charAt(k++);
                 System.out.print(cells[row][col] + " ");
             }
             System.out.println("| ");
         }
         printDash();
+        return cells;
     }
+
 
     private void printDash() {
         System.out.println("---------");
     }
 
 
-    private boolean isImpossible(String input){
+ /*   private boolean isImpossible(String input){
         int len = input.length();
         int countX =0;
         int countO =0;
@@ -40,10 +45,6 @@ public class Engine {
             else if(input.charAt(i)=='O'){
                 countO++;
             }
-        }
-        if(input.charAt(1)=='X' && input.charAt(4)=='X' && input.charAt(7)=='X' && input.charAt(2)=='O' && input.charAt(5)=='O' &&
-                input.charAt(8)=='O' ){
-            return true;
         }
         return countX - countO >= 2 || countO - countX >= 2;
     }
@@ -74,33 +75,33 @@ public class Engine {
     }
 
     public void addTotalValue() {
-        for (int row = 0; row < 3; row++) {
+        for (int row = 1; row <= 3; row++) {
             int totalRow = 0;
             int totalCol = 0;
             int leftDiagonal = 0;
             int rightDiagonal = 0;
-            for (int col = 0; col < 3; col++) {
+            for (int col = 1; col <= 3; col++) {
                 totalRow += cells[row][col];
             }
             set.add(totalRow);
             logger.info("the total of round  " + row + " is " + totalRow);
-            for (int col = 0; col < 3; col++) {
+            for (int col = 1; col <= 3; col++) {
                 totalCol += cells[col][row];
             }
             set.add(totalCol);
             logger.info("the total of round  " + row + " is " + totalCol);
-            int hor = 0;
-            int ver = 2;
-            for (int col = 0; col < 3; col++) {
+            int hor = 1;
+            int ver = 3;
+            for (int col = 1; col <= 3; col++) {
                 leftDiagonal += cells[hor++][col];
             }
             set.add(leftDiagonal);
-            for (int col = 0; col < 3; col++) {
+            for (int col = 1; col <= 3; col++) {
                 rightDiagonal += cells[col][ver--];
             }
             set.add(rightDiagonal);
         }
-    }
+    }*/
 }
  /* private int count() {
         int sum = 0;
